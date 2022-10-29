@@ -38,9 +38,6 @@ var generatePassword = function () {
   var includeLowerCaseLetters = prompt("Include lower case letters? Y or N")
   if (!includeLowerCaseLetters) {
     return;
-  } else if (includeLowerCaseLetters != 'Y' || includeLowerCaseLetters != 'N') {
-    alert("Invalid entry. Please try again.");
-    return;
   }
 
   //Ask user if upper case letter should be included
