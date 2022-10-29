@@ -27,7 +27,8 @@ var generatePassword = function () {
   }
 
   //Alert user if invalid number of characters were entered
-  if (numberOfCharacters < 8 || numberOfCharacters > 128 || typeof numberOfCharacters !== 'number') {
+  if (numberOfCharacters < 8 ||  numberOfCharacters > 128 || isNaN(numberOfCharacters)) {
+    console.log(isNaN(numberOfCharacters));
     alert("Invalid number of characters. Please try again.")
     return;
   } 
