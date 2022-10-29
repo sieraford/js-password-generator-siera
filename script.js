@@ -6,6 +6,7 @@ var specialCharacters = ['!', '"', '#','$', '%', '&','(',')',',',"'",')','*', '+
 
 var numberOfCharacters;
 
+// Helper function to randomize password
 var randomizePass = function (chars) { 
     var pass = []
       for(i = 0; i < numberOfCharacters; i++) {
@@ -16,7 +17,7 @@ var randomizePass = function (chars) {
       return passString;
 }
 
-
+// Function that generates password based off prompted user input
 var generatePassword = function () {
   //Ask user for desired length of password
   numberOfCharacters = window.prompt("Length of password? Must be at least 8 characters and no more than 128 characters.");
@@ -137,6 +138,8 @@ var generatePassword = function () {
   } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "N" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
       var characters = specialCharacters;
       return randomizePass(characters);
+  
+  // No character type selected
   } else {     
       alert("Invalid entry. Please try again.")
   }
