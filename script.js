@@ -25,7 +25,7 @@ var promptForPreferences = function (characterType, characterArray) {
   
   // Immediately end function if users clicks cancel
   if (!includeCharacterType) {
-    return; 
+    return;
   }
   
   // Ask user to try again if they enter an invalid entry 
@@ -60,11 +60,30 @@ var generatePassword = function () {
     return;
   } 
 
- // Prompt user for preferences about each character type 
-  promptForPreferences("lowercase letters", lowerCaseLetters);
-  promptForPreferences("uppercase letters", upperCaseLetters);
-  promptForPreferences("numbers", numbers);
-  promptForPreferences("special characters", specialCharacters);
+ // Prompt user for preferences about each character type. If they click cancel, end function.
+ var p = promptForPreferences("lowercase letters", lowerCaseLetters)
+  
+ if (p === undefined) {
+    return;
+  }
+  
+  p = promptForPreferences("uppercase letters", upperCaseLetters);
+  
+  if (p === undefined) {
+    return;
+  }
+  
+  p = promptForPreferences("numbers", numbers);
+  
+  if (p === undefined) {
+    return;
+  }
+  
+  p = promptForPreferences("special characters", specialCharacters);
+  
+  if (p === undefined) {
+    return;
+  }
 
   // Alert user that at least one character type is required
   if (selectedCriteria.length === 0) {
