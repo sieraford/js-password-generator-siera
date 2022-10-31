@@ -1,11 +1,11 @@
-// Arrays of all possible password characters 
+// Arrays for all possible password character types
 var numbers = [1,2,3,4,5,6,7,8,9,0];
 var lowerCaseLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var upperCaseLetters = lowerCaseLetters.map(function(x) { return x.toUpperCase(); });
 var specialCharacters = ['!', '"', '#','$', '%', '&','(',')',',',"'",')','*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?','@','[',"]",",",'^','_','`','{','|','}','~'];
 
 var numberOfCharacters;
-var selectedCriteria = [];
+var selectedCriteria;
 
 // Helper function to randomize password
 var randomizePass = function (chars) { 
@@ -18,8 +18,34 @@ var randomizePass = function (chars) {
       return passString;
 }
 
-// Function that generates password based off prompted user input
+// Helper function to prompt user for desired character types
+var promptForPreferences = function (characterType, characterArray) {
+  var message = "Include " + characterType + " ? Y or N"
+  var includeCharacterType = prompt(message)
+  
+  // Immediately end function if users clicks cancel
+  if (!includeCharacterType) {
+    return; 
+  }
+  
+  // Ask user to try again if they enter an invalid entry 
+  while(includeCharacterType != "Y" && includeCharacterType != "N") {
+    alert("Invalid entry. Please try again.")
+    includeCharacterType = prompt(message)
+  } 
+
+  // Include character type in selected criteria if user enters Y
+  if (includeCharacterType == "Y") {
+    selectedCriteria = selectedCriteria.concat(characterArray);
+  }
+
+  return selectedCriteria;
+}
+
+// Function that generates password based off user inputs
 var generatePassword = function () {
+  selectedCriteria = [];
+  
   // Ask user for desired length of password
   numberOfCharacters = window.prompt("Length of password? Must be at least 8 characters and no more than 128 characters.");
 
@@ -34,142 +60,18 @@ var generatePassword = function () {
     return;
   } 
 
-  // Ask user if lower case letters should be included
-  var includeLowerCaseLetters = prompt("Include lower case letters? Y or N")
-  
-  // Immediately end function if users clicks cancel
-  if (!includeLowerCaseLetters) {
-    return; 
-  }
-    
-  // Ask user to try again if they enter an invalid entry 
-   while(includeLowerCaseLetters != "Y" && includeLowerCaseLetters != "N") {
-    alert("Invalid entry. Please try again.")
-    includeLowerCaseLetters = prompt("Include lower case letters? Y or N")
-  } 
+ // Prompt user for preferences about each character type 
+  promptForPreferences("lowercase letters", lowerCaseLetters);
+  promptForPreferences("uppercase letters", upperCaseLetters);
+  promptForPreferences("numbers", numbers);
+  promptForPreferences("special characters", specialCharacters);
 
-  // Include character type in selected criteria if user enters Y
-  if (includeLowerCaseLetters == "Y") {
-      selectedCriteria = selectedCriteria.concat(lowerCaseLetters);
-  }
-
-  //Ask user if upper case letter should be included
-  var includeUpperCaseLetters = prompt("Include upper case letters? Y or N")
-  if (!includeUpperCaseLetters) {
-    return;
-  } 
-  
-  if (includeUpperCaseLetters == "Y") {
-    selectedCriteria = selectedCriteria.concat(upperCaseLetters);
-  }
-
-  // Ask user if numbers should be included
-  var includeNumbers = prompt("Include numbers? Y or N")
-  if (!includeNumbers) {
-    return;
-  } else if (includeNumbers == "Y") {
-    selectedCriteria = selectedCriteria.concat(numbers);
-  }
-
-  // Ask user if special characters should be included
-  var includeSpecialCharacters = prompt("Include special characters? Y or N")
-  if (!includeSpecialCharacters) {
-    return;
-  } else if (includeSpecialCharacters == "Y") {
-    selectedCriteria = selectedCriteria.concat(specialCharacters);
-  }
-
+  // Alert user that at least one character type is required
   if(selectedCriteria === []) {
-    return alert("Invalid entry. Please try again.")
+    return alert("Must select at least one character type. Please try again.")
   }
 
   return randomizePass(selectedCriteria);
-
-  // Create password
-
-
-
-
-  // // All types of characters included
-  // if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "Y" && includeNumbers == "Y" && includeSpecialCharacters == "Y") {
-  //   var characters = numbers.concat(lowerCaseLetters).concat(upperCaseLetters).concat(specialCharacters);
-  //   return randomizePass(characters);
-    
-  // // No special characters
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "Y" && includeNumbers == "Y" && includeSpecialCharacters == "N") {
-  //     var characters = numbers.concat(lowerCaseLetters).concat(upperCaseLetters);
-
-  //     return randomizePass(characters);
-
-  // // No numbers
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "Y" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
-  //     var characters = lowerCaseLetters.concat(upperCaseLetters).concat(specialCharacters);
-  //     return randomizePass(characters);
-
-  // // No lowercase letters
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "Y" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
-  //     var characters = numbers.concat(upperCaseLetters).concat(specialCharacters);
-  //     return randomizePass(characters);
-
-  // // No uppercase letters  
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "N" && includeNumbers == "Y" && includeSpecialCharacters == "Y") {
-  //     var characters = numbers.concat(lowerCaseLetters).concat(specialCharacters);
-  //     return randomizePass(characters);
-  
-  // // No lowercase or uppercase letters
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "N" && includeNumbers == "Y" && includeSpecialCharacters == "Y") {
-  //     var characters = numbers.concat(specialCharacters);
-  //     return randomizePass(characters);
-  
-  // // No lowercase letters or numbers
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "Y" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
-  //     var characters = upperCaseLetters.concat(specialCharacters);
-  //     return randomizePass(characters);
-  
-  // // No lowercase letters or special characters
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "Y" && includeNumbers == "Y" && includeSpecialCharacters == "N") {
-  //     var characters = upperCaseLetters.concat(numbers);
-  //     return randomizePass(characters);
-  
-  // // No uppercase letters or numbers
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "N" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
-  //     var characters = lowerCaseLetters.concat(specialCharacters);
-  //     return randomizePass(characters);
-
-  // // No uppercase letters or special characters
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "N" && includeNumbers == "Y" && includeSpecialCharacters == "N") {
-  //     var characters = lowerCaseLetters.concat(numbers);
-  //     return randomizePass(characters);
-
-  // // No special characters or numbers
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "Y" && includeNumbers == "N" && includeSpecialCharacters == "N") {
-  //     var characters = upperCaseLetters.concat(lowerCaseLetters);
-  //     return randomizePass(characters);
-  
-  // // Only lowercase letters
-  // } else if (includeLowerCaseLetters == "Y" && includeUpperCaseLetters == "N" && includeNumbers == "N" && includeSpecialCharacters == "N") {
-  //     var characters = lowerCaseLetters;
-  //     return randomizePass(characters);
-
-  // // Only uppercase letters
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "Y" && includeNumbers == "N" && includeSpecialCharacters == "N") {
-  //     var characters = upperCaseLetters;
-  //     return randomizePass(characters);
-  
-  // // Only numbers
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "N" && includeNumbers == "Y" && includeSpecialCharacters == "N") {
-  //     var characters = numbers;
-  //     return randomizePass(characters);
-
-  // // Only special characters
-  // } else if (includeLowerCaseLetters == "N" && includeUpperCaseLetters == "N" && includeNumbers == "N" && includeSpecialCharacters == "Y") {
-  //     var characters = specialCharacters;
-  //     return randomizePass(characters);
-  
-  // // No character type selected
-  // } else {     
-  //     alert("Invalid entry. Please try again.")
-  // }
 }
 
 // Get references to the #generate element
