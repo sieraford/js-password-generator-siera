@@ -67,7 +67,7 @@ var generatePassword = function () {
   promptForPreferences("special characters", specialCharacters);
 
   // Alert user that at least one character type is required
-  if(selectedCriteria === []) {
+  if (selectedCriteria.length === 0) {
     return alert("Must select at least one character type. Please try again.")
   }
 
