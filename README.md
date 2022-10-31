@@ -8,7 +8,7 @@ Click [here](https://sieraford.github.io/js-password-generator-siera/) to view t
 
 ## Screenshots
 
-![GIF](./assets/images/demo.gif)
+![GIF](./assets/images/password.gif)
 
 ## Installation
 
